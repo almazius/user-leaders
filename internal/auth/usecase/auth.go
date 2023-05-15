@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"errors"
+	"fmt"
 	"github.com/mod/internal"
 	"github.com/mod/internal/auth"
 	"github.com/mod/internal/auth/repository"
@@ -28,7 +29,22 @@ func SingIn(user *auth.UserForLogin) internal.HackError {
 		}
 	}
 
+	if res, err := repository.TrySingIn(user.Login, user.Password); !res {
+		if err.Err == nil {
+			log.Print("failed login")
+			err.Code = 400
+			err.Err = errors.New("user not found")
+			err.Message = "Check your login and password"
+			err.Timestamp = time.Now()
+		}
+		return err
+	} else {
+		// return jwt
+		fmt.Println("Success login!")
+	}
+	return internal.HackError{}
 }
+
 func SingUp(user *auth.UserForRegister) internal.HackError {
 	existPhone, err := repository.ExistsUser(user.Phone)
 	if err != nil {

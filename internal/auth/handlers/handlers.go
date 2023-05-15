@@ -40,6 +40,11 @@ func login(ctx *fiber.Ctx) error {
 		ctx.Status(400)
 		return ctx.JSON(errors)
 	}
+
+	err := usecase.SingIn(user)
+	if err.Err != nil {
+		return ctx.JSON(err)
+	}
 	return ctx.JSON(*user)
 }
 
