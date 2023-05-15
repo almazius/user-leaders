@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/mod/internal"
 	"github.com/mod/internal/auth"
+	"github.com/mod/internal/auth/usecase"
 	"time"
 )
 
@@ -60,7 +61,10 @@ func register(c *fiber.Ctx) error {
 		c.Status(400)
 		return c.JSON(errors)
 	}
-
+	err := usecase.CreateUser(user)
+	if err.Err != nil {
+		return c.JSON(err)
+	}
 	// ...
 
 	return c.JSON(*user)

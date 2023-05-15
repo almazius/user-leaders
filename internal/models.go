@@ -1,6 +1,8 @@
 package internal
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	Id         int    `json:"id"`
@@ -8,9 +10,9 @@ type User struct {
 	Surname    string `json:"surname"`
 	Patronymic string `json:"patronymic"`
 	Email      string `json:"email"`
-
-	IsAdmin  bool
-	Password string
+	Phone      string `json:"phone"`
+	IsAdmin    bool
+	Password   string
 }
 
 type HackError struct {
