@@ -61,7 +61,7 @@ func register(c *fiber.Ctx) error {
 		c.Status(400)
 		return c.JSON(errors)
 	}
-	err := usecase.CreateUser(user)
+	err := usecase.SingUp(user)
 	if err.Err != nil {
 		return c.JSON(err)
 	}
